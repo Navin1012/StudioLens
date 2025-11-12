@@ -5,12 +5,19 @@ export default function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Scroll to top smoothly whenever the route changes
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    // Ensure scroll reset after page transition or lazy component load
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth", // Smooth cinematic scroll
+      });
+    };
+
+    // Add a tiny delay to handle lazy-loaded routes
+    const timer = setTimeout(scrollToTop, 150);
+
+    return () => clearTimeout(timer);
   }, [pathname]);
 
-  return null; // this component doesn't render anything
+  return null; // invisible helper component
 }

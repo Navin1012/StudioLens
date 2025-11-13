@@ -49,6 +49,18 @@ export default function Portfolio() {
      LIGHTBOX CLOSE
   ----------------------------- */
   const closeLightbox = useCallback(() => setSelected(null), []);
+/* -----------------------------
+   RE-OBSERVE ON CATEGORY CHANGE
+------------------------------*/
+useEffect(() => {
+  const items = document.querySelectorAll("[data-src]");
+
+  items.forEach((el) => {
+    if (observerRef.current) {
+      observerRef.current.observe(el);
+    }
+  });
+}, [category]);
 
   return (
     <section className="py-14 px-6 bg-[#0D0D0D]">
